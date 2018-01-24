@@ -110,6 +110,76 @@ To see the full directory, use pwd command
 
 ```
 
+To make a directory, use mkdir command
+
+To view all the directories, use ll command
+
+To enter into a directory, use cd 'directory name' command
+
+cd /data takes you into the shared space where you might find some data
+
+```
+[sbhatta4@pbio381 mydata]$ cd /data
+[sbhatta4@pbio381 data]$ ll
+total 12
+drwxr-xr-x.  5 root     root       73 Jan 31  2017 archive
+drwxr-xr-x.  2 srkeller users      49 Jan 23 13:20 external_data
+drwxrwxr-x.  2 root     pb381adm   40 Nov 30  2015 packages
+drwxrwxr-x. 48 root     pb381adm 4096 Mar 28  2017 popgen
+drwxrwxr-x.  4 root     pb381adm   42 Jan 23 16:51 project_data
+drwxrwxr-x.  2 root     pb381adm 4096 Aug  8 16:53 scripts
+drwxr-xr-x. 21 root     root     4096 Feb  1  2017 users
+
+
+```
+To look what's in those files write cd 'file name'/ For e.g to see what's inside project_data folder, write cd project_data/ and write ll 
+
+```
+[sbhatta4@pbio381 data]$ cd project_data
+[sbhatta4@pbio381 project_data]$ ll
+total 4
+drwxrwxr-x. 4 root pb381adm   35 Jan 23 16:52 beetles
+drwxr-xr-x. 8 root pb381adm 4096 Jan 23 13:20 ssw
+
+
+```
+There are two folders beetles and ssw. Similarly, to see what's inside beetles write cd beetles/ and then write ll
+```
+drwxr-xr-x. 6 root pb381adm 86 Jan 23 16:52 archive
+drwxr-xr-x. 2 root pb381adm 34 Jan 23 16:51 metadata
+[sbhatta4@pbio381 beetles]$
+
+
+```
+
+Now when we opened metadata, then we find cols_data.txt. this is a text file, so it must conatain some information about the beetles. But we don't want to edit these contents in the shared space. So we need to first copy this file into our personal space. So we can now use cp commnad to copy it to our home directory. 
+
+cp cols_data.txt ~/mydata/
+
+```
+
+-rwxr-xr-x. 1 root pb381adm 1474 Jan 23 16:50 cols_data.txt
+[sbhatta4@pbio381 metadata]$ cp cols_data.txt ~/mydata/
+[sbhatta4@pbio381 metadata]$
+
+
+```
+
+Now to see whether it has been copied to our personal folder or now, we need to open our home directory and check into  mydata by using ll 
+
+```
+[sbhatta4@pbio381 metadata]$ cd ~/mydata/
+[sbhatta4@pbio381 mydata]$ ll
+total 4
+-rwxr-xr-x. 1 sbhatta4 users 1474 Jan 24 14:16 cols_data.txt
+
+
+```
+
+
+
+
+
 
 ------
 <div id='id-section2'/>
