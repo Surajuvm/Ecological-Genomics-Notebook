@@ -175,11 +175,85 @@ total 4
 
 
 ```
+Now we want to see what's inside this file. We can use 'head' command to see the first 10 lines and 'tail' command to see the last 10 lines. 
+
+```
+sample_ID       population      devstage        sex
+IT_AD4_F1_      IT      AD4     F
+IT_AD4_F2_      IT      AD4     F
+IT_AD4_F3_      IT      AD4     F
+IT_AD4_M1_      IT      AD4     M
+IT_AD4_M2_      IT      AD4     M
+IT_AD4_M3_      IT      AD4     M
+IT_ADC_F13      IT      ADC     F
+IT_ADC_F14      IT      ADC     F
+IT_ADC_F15      IT      ADC     F
+[sbhatta4@pbio381 mydata]$ tail cols_data.txt
+WA_PD1_F3_      WA      PD1     F
+WA_PD1_M1_      WA      PD1     M
+WA_PD1_M2_      WA      PD1     M
+WA_PD1_M3_      WA      PD1     M
+WA_PP1_F1_      WA      PP1     F
+WA_PP1_F2_      WA      PP1     F
+WA_PP1_F3_      WA      PP1     F
+WA_PP1_M1_      WA      PP1     M
+WA_PP1_M2_      WA      PP1     M
+WA_PP1_M3_      WA      PP1     M
 
 
+```
+If we want to search specific thing in the file, we can use search command grep. For e.g. if we want to see only the samples from IT, then we should use grep 'IT' cols_data.txt
 
 
+```
+[sbhatta4@pbio381 mydata]$ grep 'IT' cols_data.txt
+IT_AD4_F1_      IT      AD4     F
+IT_AD4_F2_      IT      AD4     F
+IT_AD4_F3_      IT      AD4     F
+IT_AD4_M1_      IT      AD4     M
+IT_AD4_M2_      IT      AD4     M
+IT_AD4_M3_      IT      AD4     M
+IT_ADC_F13      IT      ADC     F
+IT_ADC_F14      IT      ADC     F
+IT_ADC_F15      IT      ADC     F
+IT_ADC_F1_      IT      ADC     F
+IT_ADC_F2_      IT      ADC     F
+IT_ADC_F3_      IT      ADC     F
+IT_ADC_F4_      IT      ADC     F
+IT_ADC_F5_      IT      ADC     F
+IT_ADC_F6_      IT      ADC     F
+IT_ADC_M10      IT      ADC     M
+IT_ADC_M11      IT      ADC     M
+IT_ADC_M12      IT      ADC     M
+IT_ADC_M16      IT      ADC     M
+IT_ADC_M17      IT      ADC     M
+IT_ADC_M18      IT      ADC     M
+IT_ADC_M7_      IT      ADC     M
+IT_ADC_M8_      IT      ADC     M
+IT_ADC_M9_      IT      ADC     M
 
+
+```
+If you want to rename the filename then you can use mv command. For this use mv file1 file2. This will rename file1 into file2. For e.g. if you do not like the name cols_data.txt, then you can change into beetles.txt by typing mv cols_data.txt beetles.txt
+
+```
+[sbhatta4@pbio381 mydata]$ mv cols_data.txt beetles.txt
+[sbhatta4@pbio381 mydata]$ beetles.txt
+
+
+```
+If we want to save the output of command grep 'IT' beetles.txt into a separate file, then we should use following commands: grep 'IT' beetles.txt >beetles_ITonly.txt 
+
+```
+
+[sbhatta4@pbio381 mydata]$ grep 'IT' beetles.txt >beetles_ITonly.txt
+[sbhatta4@pbio381 mydata]$ ll
+total 8
+-rw-r--r--. 1 sbhatta4 users  480 Jan 24 14:39 beetles_ITonly.txt
+-rwxr-xr-x. 1 sbhatta4 users 1474 Jan 24 14:16 beetles.txt
+
+
+```
 
 ------
 <div id='id-section2'/>
