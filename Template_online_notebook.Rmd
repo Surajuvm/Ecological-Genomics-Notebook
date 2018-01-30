@@ -257,7 +257,14 @@ total 8
 
 ------
 <div id='id-section2'/>
-### Page 2: 2018-01-29 
+### Page 2: 2018-01-29 Starting working with the bull headed beetle. 
+
+Raw data of RNA sequencing were provided by Prof. Melissa. These files were present in the shared space.
+We used the following codes to peek a the data
+```
+
+
+```
 ------
 <div id='id-section3'/>
 ### Page 3:
