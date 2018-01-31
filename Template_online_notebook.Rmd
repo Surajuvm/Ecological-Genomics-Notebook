@@ -278,7 +278,7 @@ The samples were sequenced on about 7 lanes of Illumina HiSeq2500.
 ### Samples
 Three individuals of three given populations (IT, WA, NC) of four developmental stages viz. late third larval instar (L3L), pre-pupae day 1 (PP1), 
 pupae day 1 (PD1), and adults four days after ecolsion (AD4) were collected for both the sexes. 
-Total number of samples were thus 3*3*4*2 = 72 samples
+Total number of samples were thus 3 * 3 * 4 * 2 = 72 samples
 
 ### Pipeline
 This refers to the entire process that the raw sequencing data goes through before we get some meaningful information out of it.
@@ -327,7 +327,11 @@ Quality encoding: !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHI
 We can see that ! refers to the Phred Q score of 0 where as I refers to the score 40. 
 
 ### Visualizing the data with FastQC
+
 We have a program FastQC already installed in our /data/popgen directory 
+So we used the command fastqc 'filename' and it started the analysis. It takes some time to complete. Be patient. 
+
+
 ------
 <div id='id-section3'/>
 ### Page 3:
