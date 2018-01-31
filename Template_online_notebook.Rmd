@@ -28,7 +28,7 @@ Science should be reproducible and one of the best ways to achieve this is by lo
 ### Table of contents for 60 entries (Format is *Page: Date(with year-month-day). Title*)        
 * [Page 1: 2018-01-24](#id-section1). Intro to Github, RMarkdown, and UNIX command-line
 * [Page 2: 2018-01-29](#id-section2). Working with RNAseq data of Beetles
-* [Page 3:](#id-section3).
+* [Page 3:](#id-section3). Clean using Trimmomatic
 * [Page 4:](#id-section4).
 * [Page 5:](#id-section5).
 * [Page 6:](#id-section6).
@@ -334,7 +334,62 @@ So we used the command fastqc 'filename' and it started the analysis. It takes s
 
 ------
 <div id='id-section3'/>
-### Page 3:
+### Page 3: 1st January 2018
+
+Today we will be using Trimmomatic to clean the raw data we visualized using FastQC.
+First we copied ll
+
+#! mark is telling the computer that this is a bash script which is in the bin directory. Rest is the command for calling the program Trimmomatic. First is the place where the program is /data/........gar. TrimmomaticPE says we need a pair edn reads \
+forward slash says where the command is going. can use multiple lines for the codes. Threads 1 ,a nd phred 33 scale on which the data is based. Two input files which we have to put our file names. 
+Four output files in the same order
+it is going to keep only those which have aligned in paired files. Junk which are chopped off during cleaning are kept in unpaired files. Note that unpaired files could be useful depending on the question you ask.
+
+Illumina adapters - to look for them and how to remove them
+
+Leading, Trailing, Sliding window, headcrop and minlen are different parameters that we can manipulate. 
+These operations are in the fixed given order. They cannot be changed. 
+
+The file trim_example.sh were copied and edited into our own directory. 
+
+To make the file executable, we need to make it executable which is represented by symbol x. The first four symbols r = read, w = write, x = executable; first group is for owner, second group is for group; and the last group is for the world. 
+
+To make the script executable, it needs to have x in it. For this use the command
+```
+chmod u+x 'file name'
+
+```
+To run any bash files, we can type bash 'filename' or ./filename
+
+./ means do whatever what i want you to do and look into the current directory file. 
+
+When we opened our cleanread directory, we found the clean read files.
+
+We can then again use these files to visualize in FastQC. 
+
+We used WinSCP to locate files in our server and copy it into the desktop. The cleaned html file can be visualized in any browser. 
+
+We found that the problem of per base sequence content was eliminated by this trimming process. 
+
+GC content in the FastQC can be used to predict if the genome in question comes from same or different organisms. If say, there was a bacterial genome contamination in the human sample, we might see bimodal or skewed distribution of GC% because different organism may have different GC content. 
+
+Once we have the clean read. We can use them to map into the reference genome if we have one. 
+Reference transcriptome was already downloaded and saved in the shared space. First step in the mapping read is to make an index. 
+Indexing up speeds up the alignment. It needs to be done only once. It has already been done. Indexing file always start with .fna 
+
+We will use bwa for mapping. other programs are bowtie etc. 
+
+We will save our mapping output in mydata directory
+
+We created a new screen by writing screen
+
+We have the code running on the background, use Ctrl + A + D, then it will just vanish and we can then turn off our computer, the program will just be running. 
+
+To raattach the screen we should write screen -r
+
+
+
+
+
 ------
 <div id='id-section4'/>
 ### Page 4:
