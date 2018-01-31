@@ -27,7 +27,7 @@ Science should be reproducible and one of the best ways to achieve this is by lo
 
 ### Table of contents for 60 entries (Format is *Page: Date(with year-month-day). Title*)        
 * [Page 1: 2018-01-24](#id-section1). Intro to Github, RMarkdown, and UNIX command-line
-* [Page 2: 2018-01-29](#id-section2).
+* [Page 2: 2018-01-29](#id-section2). Working with RNAseq data of Beetles
 * [Page 3:](#id-section3).
 * [Page 4:](#id-section4).
 * [Page 5:](#id-section5).
@@ -259,12 +259,75 @@ total 8
 <div id='id-section2'/>
 ### Page 2: 2018-01-29 Starting working with the bull headed beetle. 
 
-Raw data of RNA sequencing were provided by Prof. Melissa. These files were present in the shared space.
-We used the following codes to peek a the data
-```
+### Overview
+Raw data of RNA sequencing were provided by Prof. Melissa. The objectives of this 
+class were to understand the biology of beetle, to familiarize with the general work flow
+or "pipeline" for processing and analyzing RNAseq data and to visualize and interpret Illumina data quality
+using a fastq file. 
 
+### The Beetles
+
+Onthophagus taurus beetles are native to the mediterranean and they were introduced to Australia in the late 1960s.
+These were dung beetles and helped reduce fly pests and disease that were detrimental to the livestock. In 1970s,
+these beetles were "accidentally" introduced to the eastern Unites States from an unknown origin. 
+
+### Study Question
+The study aimed to determine the genetic variation among the beetles which were native to Italy (IT), 
+Western Australia (WA), and North Carolina (NC). RNA sequencing technique was employed to address this question. 
+The samples were sequenced on about 7 lanes of Illumina HiSeq2500. 
+### Samples
+Three individuals of three given populations (IT, WA, NC) of four developmental stages viz. late third larval instar (L3L), pre-pupae day 1 (PP1), 
+pupae day 1 (PD1), and adults four days after ecolsion (AD4) were collected for both the sexes. 
+Total number of samples were thus 3*3*4*2 = 72 samples
+
+### Pipeline
+This refers to the entire process that the raw sequencing data goes through before we get some meaningful information out of it.
+1. Visualizing and Cleaning data.
+To visualize the quality of raw data, program FastQC is used and to clean the raw data, program Trimmomatic can be used. Later, the quality of cleaned data can be again visualized in FastQC.
+
+The other steps of Pipeline would be updated after we actually do it.
+
+### Working with RNAseq data
+Raw RNA sequencing data from Beeltes were present in the shared space of our pbio381.uvm.edu server. 
+One file containing raw RNA sequences were provided to each of us. We used the following codes to locate our files.
+```
+[sbhatta4@pbio381 data]$ cd project_data/beetles/rawdata/
 
 ```
+Once we find the file. We used a command to see what's in the file. For this zcat command is used 
+
+```
+sbhatta4@pbio381 rawdata]$ zcat WA_PP1_M3_GTGAAA_L003_R2_001.fastq.gz | head -n4
+```
+In here, zcat is the command, and "WA...gz" is the file name. '| head - n4' means that the first four lines of the file will be shown. 
+We found something like this.
+
+```
+[sbhatta4@pbio381 rawdata]$ zcat WA_PP1_M3_GTGAAA_L003_R2_001.fastq.gz | head -n4
+@CCRI0219:155:C2LNBACXX:3:1101:1412:1969 2:N:0:GTGAAA
+GAAAGACCAAAATCCCTTTCGACTGACGGCTTAATGACGGCCCTCAAGGCATCATNAATCATACNGATAGCNGGTNAAAACCACACAATAAAAAAAAACA
++
+CCCFFFFFHHHHGJJJJJJJIIIIGIJJIJIJIGJJFIIJIJJJIIIJIIHGHHH#,;;?BCEC#,5?@DC#,<(#,2<@@DDDDDDDDDDDDDDDDDDD
+
+```
+Here, the first line starting with '@CCRI.....' is the information about the read.
+The second line is the actual DNA sequence that we need to analyze.
+The third line always begins with a plus and sometimes may contain the same info as in line 1. In our case it bears only the + sign
+The fourth line has the string of characters and each of these character represent the quality scores of the bases that we have in second line.
+Note that the characters in fourth line equals the number of bases in second line, and the quality of each base in the second line is given by the character that is present below it in the fourth line. 
+
+To determine the quality of the bases, Phred or Q score are used. Phred score of 10, 20, 30 and 40 represents 90%, 99%, 99.9% and 99.99% base call accuracy respectively. The Phred score of greater than 30 is considered to have a decent quality. Note that 99.99% base call accuracy implies that the machine is 99.99% sure that the base that it called is the same base that's present in the sample. 
+The Phred score can is translated to ASCII characters so that the two digit number can be represented by a single character. 
+
+```
+Quality encoding: !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHI
+                  |         |         |         |         |
+    Quality score:0........10........20........30........40   
+```
+We can see that ! refers to the Phred Q score of 0 where as I refers to the score 40. 
+
+### Visualizing the data with FastQC
+We have a program FastQC already installed in our /data/popgen directory 
 ------
 <div id='id-section3'/>
 ### Page 3:
