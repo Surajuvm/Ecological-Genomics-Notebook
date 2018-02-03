@@ -329,18 +329,96 @@ We can see that ! refers to the Phred Q score of 0 where as I refers to the scor
 ### Visualizing the data with FastQC
 
 We have a program FastQC already installed in our /data/popgen directory 
-So we used the command fastqc 'filename' and it started the analysis. It takes some time to complete. Be patient. 
+So we used the command fastqc 'filename' and it started the analysis. It 
+takes some time to complete. Be patient. I have copied the file that I have to analyze into 
+a directory called 'practice' in my private space. There are two files containing raw sequence data. 
 
+```
+fastqc WA_PP1_M3_GTGAAA_L003_R1_001.fastq.gz 
+```
+
+After the analysis is done, you can do 'll' and see that there are two other files ending in .html and .zip in the directory where you had your raw data .fastq.gz files.
+
+We want to visualize the data present in other file as well. So we gave the command
+
+```
+fastqc WA_PP1_M3_GTGAAA_L003_R2_001.fastq.gz
+
+```
+Note: The command is "fastqc" and the file format is .fastq. If you write only fastq in the command, it will not understand. 
+
+Afther the fastqc analysis of both the files were done, we did ll in the practice directory and saw following files
+
+```
+[sbhatta4@pbio381 practice]$ ll
+total 3208516
+-rw-r--r--. 1 sbhatta4 users     352784 Feb  3 14:05 WA_PP1_M3_GTGAAA_L003_R1_001_fastqc.html
+-rw-r--r--. 1 sbhatta4 users     461631 Feb  3 14:05 WA_PP1_M3_GTGAAA_L003_R1_001_fastqc.zip
+-rwxr-x---. 1 sbhatta4 users 1637276697 Feb  3 14:00 WA_PP1_M3_GTGAAA_L003_R1_001.fastq.gz
+-rw-r--r--. 1 sbhatta4 users     378473 Feb  3 14:14 WA_PP1_M3_GTGAAA_L003_R2_001_fastqc.html
+-rw-r--r--. 1 sbhatta4 users     500424 Feb  3 14:14 WA_PP1_M3_GTGAAA_L003_R2_001_fastqc.zip
+-rwxr-x---. 1 sbhatta4 users 1646538439 Feb  3 14:01 WA_PP1_M3_GTGAAA_L003_R2_001.fastq.gz
+
+```
+The files ending in .fastq.gz are actual files containing raw RNA sequence data. Note the large file size 
+around 16gigabites for each file. The files ending in .html and .zip are output files after analyzed by fastqc. 
+The html files can be viewed with any browser like chrome. These files can be copied to the local computer (my documents)
+using WinSCP software. WinSCP allows files to interchange between local computer and the server we are working on. 
+
+.html files generated from fastc analysis were then copied
+to my documents in my laptop and viewed in the browser.
+There are many parameters which needs to be modified before
+these sequences could be aligned to the reference genome.
+
+To clean or trim these files would be the objective of next class
 
 ------
 <div id='id-section3'/>
-### Page 3: 1st January 2018
+### Page 3: 1st February 2018
 
-Today we will be using Trimmomatic to clean the raw data we visualized using FastQC.
-First we copied ll
+Today we will be using Trimmomatic to clean the raw data which we visualized using FastQC.
+Trimmomatic is a flexible trimming tool for Illumina NGS data. 
 
-#! mark is telling the computer that this is a bash script which is in the bin directory. Rest is the command for calling the program Trimmomatic. First is the place where the program is /data/........gar. TrimmomaticPE says we need a pair edn reads \
-forward slash says where the command is going. can use multiple lines for the codes. Threads 1 ,a nd phred 33 scale on which the data is based. Two input files which we have to put our file names. 
+The software was already downloaded and stored into the shared space of our pbio381 server
+in /data/popgen directory.
+
+To run a Trimmomatic file we need a bash script. A directory called myscripts was made inside
+practice directory and the bash script file was copied there. Following code was used
+
+```
+cp /data/scripts/trim_example.sh ~/practice/myscripts 
+```
+Then the bash script was opened and edited using the program vim by writing the code
+
+```
+vim trim_example.sh
+```
+This opens up the vim program where we can see the script and edit it according to 
+our requirements. Following script was observed when we opened it
+
+```
+#!/bin/bash
+      java -classpath /data/popgen/Trimmomatic-0.33/trimmomatic-0.33.jar org.usadellab.trimmomatic.TrimmomaticPE \
+                -threads 1 \
+                -phred33 \
+                 /data/project_data/beetles/rawdata/WA_PP1_YOURSAMPLE_R1.fastq.gz \
+                 /data/project_data/beetles/rawdata/WA_PP1_YOURSAMPLE_R2.fastq.gz \
+                 ~/cleanreads/"WA_PP1_YOURSAMPLE_R1_clean_paired.fa" \
+                 ~/cleanreads/"WA_PP1_YOURSAMPLE_R1_clean_unpaired.fa" \
+                 ~/cleanreads/"WA_PP1_YOURSAMPLE_R2_clean_paired.fa" \
+                 ~/cleanreads/"WA_PP1_YOURSAMPLE_R2_clean_unpaired.fa" \
+                 ILLUMINACLIP:/data/popgen/Trimmomatic-0.33/adapters/TruSeq3-PE.fa:2:30:10 \
+                 LEADING:28 \
+             TRAILING:28 \
+             SLIDINGWINDOW:6:28 \
+             HEADCROP:12 \
+             MINLEN:35 \
+```
+
+
+
+#! mark is telling the computer that this is a bash script which is in the bin directory. Rest is the command for calling the program Trimmomatic. First is the place where the program is /data/........gar. TrimmomaticPE says we need a pair end reads \
+forward slash says where the command is going. can use multiple lines for the codes. Threads 1 ,and phred 33 scale on which the data is based. Two input files which we have to put our file names. 
 Four output files in the same order
 it is going to keep only those which have aligned in paired files. Junk which are chopped off during cleaning are kept in unpaired files. Note that unpaired files could be useful depending on the question you ask.
 
