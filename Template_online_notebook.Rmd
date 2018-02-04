@@ -429,6 +429,28 @@ These operations are in the fixed given order. They cannot be changed.
 
 The file trim_example.sh were copied and edited into our own directory. 
 
+The final bash script after we edited looked like this 
+
+```
+#!/bin/bash
+      java -classpath /data/popgen/Trimmomatic-0.33/trimmomatic-0.33.jar org.usadellab.trimmomatic.TrimmomaticPE \
+                -threads 1 \
+                -phred33 \
+                ~/practice/WA_PP1_M3_GTGAAA_L003_R1_001.fastq.gz \
+                ~/practice/WA_PP1_M3_GTGAAA_L003_R2_001.fastq.gz \
+                 ~/practice/cleanreads/"WA_PP1_M3_GTGAAA_L003_R1_clean_paired.fa" \
+                 ~/practice/cleanreads/"WA_PP1_M3_GTGAAA_L003_R1_clean_unpaired.fa" \
+                 ~/practice/cleanreads/"WA_PP1_M3_GTGAAA_L003_R2_clean_paired.fa" \
+                 ~/practice/cleanreads/"WA_PP1_M3_GTGAAA_L003_R2_clean_unpaired.fa" \
+                 ILLUMINACLIP:/data/popgen/Trimmomatic-0.33/adapters/TruSeq3-PE.fa:2:30:10 \
+                 LEADING:28 \
+             TRAILING:28 \
+             SLIDINGWINDOW:6:28 \
+             HEADCROP:12 \
+             MINLEN:35 \
+
+```
+
 To make the file executable, we need to make it executable which is represented by symbol x. The first four symbols r = read, w = write, x = executable; first group is for owner, second group is for group; and the last group is for the world. 
 
 To make the script executable, it needs to have x in it. For this use the command
@@ -440,13 +462,34 @@ To run any bash files, we can type bash 'filename' or ./filename
 
 ./ means do whatever what i want you to do and look into the current directory file. 
 
-When we opened our cleanread directory, we found the clean read files.
+When we opened our cleanread directory inside the practice directory, we found the clean read files.
 
-We can then again use these files to visualize in FastQC. 
+```
+[sbhatta4@pbio381 myscripts]$ cd ~/practice/cleanreads/
+[sbhatta4@pbio381 cleanreads]$ ll
+total 5385756
+-rw-r--r--. 1 sbhatta4 users 2454470153 Feb  4 06:41 WA_PP1_M3_GTGAAA_L003_R1_clean_paired.fa
+-rw-r--r--. 1 sbhatta4 users  456373636 Feb  4 06:41 WA_PP1_M3_GTGAAA_L003_R1_clean_unpaired.fa
+-rw-r--r--. 1 sbhatta4 users 2436786431 Feb  4 06:41 WA_PP1_M3_GTGAAA_L003_R2_clean_paired.fa
+-rw-r--r--. 1 sbhatta4 users  167378570 Feb  4 06:41 WA_PP1_M3_GTGAAA_L003_R2_clean_unpaired.fa
+```
+We can then again use these files to visualize in FastQC by typing the code
+
+```
+fastqc WA_PP1_M3_GTGAAA_L003_R1_clean_paired.fa
+```
+This will create a fastq.html and fastq.zip files of the above cleaned sequence and we can do same for R2 clean paired file as well.
+We can then access these files using WinSCP and analyze in any browser. 
 
 We used WinSCP to locate files in our server and copy it into the desktop. The cleaned html file can be visualized in any browser. 
 
-We found that the problem of per base sequence content was eliminated by this trimming process. 
+We found that the failure of per base sequence content was shifted to warning by this trimming process in both the R1 and R2 files.
+To analyze what different parameters refers and to better understand the graphs, we found a website 
+http://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/
+http://www.bioinformatics.babraham.ac.uk/projects/fastqc/
+
+
+
 
 GC content in the FastQC can be used to predict if the genome in question comes from same or different organisms. If say, there was a bacterial genome contamination in the human sample, we might see bimodal or skewed distribution of GC% because different organism may have different GC content. 
 
