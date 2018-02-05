@@ -28,7 +28,7 @@ Science should be reproducible and one of the best ways to achieve this is by lo
 ### Table of contents for 60 entries (Format is *Page: Date(with year-month-day). Title*)        
 * [Page 1: 2018-01-24](#id-section1). Intro to Github, RMarkdown, and UNIX command-line
 * [Page 2: 2018-01-29](#id-section2). Working with RNAseq data of Beetles
-* [Page 3:](#id-section3). Clean using Trimmomatic
+* [Page 3: 2018-02-01](#id-section3). Clean using Trimmomatic
 * [Page 4:](#id-section4).
 * [Page 5:](#id-section5).
 * [Page 6:](#id-section6).
@@ -489,6 +489,19 @@ http://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Mod
 http://www.bioinformatics.babraham.ac.uk/projects/fastqc/
 
 
+The files were trimmed again by altering the headcrop parameters, The headcrops of 12,8 and 16 were performed and the results are saved 
+in cleanreads directory under practice.
+
+The headcrop of 12 along with other parameters used in the first place gave us a trimmed file which looked considerably better than the raw file. 
+However, changing the headcrop to 8 or 16 did not have any significant changes in the result. 
+
+We then changed the sliding window to 4:10. Initially it was 6:28. 6:28 means that it will look at 6 bases each time and calculate their Phred score. 
+If the Phred score is less than 28, then it cuts the sequence there. However we have kept minlen as 35, MINLEN is the minimum length of the 
+of sequence that will considered. So, if a sequence has lower Phred score (lower than the threshold we have set) in the beginning of it's 5 prime end
+then it will be cut in that site; and if the resulting fragment is less than 35 bases (it is a threshold which we have set) then whole of this sequence
+will be rejected. This sequence might have higher Phred quality reads in the 3 prime end but those won't be considered. This might be the reason
+why the trimmed fragments which are stored in 'unpaired' file may be important in some occasions like Prof. Melissa mentioned. 
+
 
 
 GC content in the FastQC can be used to predict if the genome in question comes from same or different organisms. If say, there was a bacterial genome contamination in the human sample, we might see bimodal or skewed distribution of GC% because different organism may have different GC content. 
@@ -499,6 +512,27 @@ Indexing up speeds up the alignment. It needs to be done only once. It has alrea
 
 We will use bwa for mapping. other programs are bowtie etc. 
 
+### Mapping the clean reads across reference transcriptome
+The reference transcriptome present in the shared space was copied into the reference directory under practice
+in the private space by using the following code
+```
+cp /data/project_data/beetles/reference/OTAU.fna ~/practice/reference
+```
+Next indexing was done using the following code.
+```
+bwa index ~/practice/reference/OTAU.fna
+```
+This code generated 5 indexing files.
+
+Finally the code for mapping our clean read sequences with the reference transcriptome was given.
+
+```
+ bwa mem /data/project_data/beetles/reference/OTAU.fna ~/cleanreads/WA_PP1_M3_R1_clean_paired.fa
+ ~/cleanreads/WA_PP1_M3_R2_clean_paired.fa > WA_PP1_M3_bwamem.sam
+
+``` 
+Here, bwa mem is the command, /data.......OTAU.fna is the location of reference file, ~/cleanreads.......fa is the first cleaned file, ~/celanreads.....fa 
+is the second cleaned file, then > sign is given before the output name. The output will always be in the format filename_bwamem.sam 
 We will save our mapping output in mydata directory
 
 We created a new screen by writing screen
